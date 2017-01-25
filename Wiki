@@ -1,0 +1,25 @@
+English help for the wonderful **PhotoGallery** :)
+
+Clarification on the work performed:
+
+
+Steps:
+------
+
+Move the database the Database folder in the project repository. There are two files - one to create a database, which is used to authenticate users Identity. And the second file - for database which stores the other application data. Including exceptions log. To add exceptions interception logic I used a third-party library Elmah.
+
+Set credentials for the test the average user: Username: freeuser@test.com Password: Password1!
+
+Set credentials pay for the test user (in the current application does not allow the user to create a new pay, check creates a normal user): Username: paiduser@test.com Password: Password1!
+
+Add a picture to an album can be on the page Photos using the Add to Album button under each photo.
+
+The project used the Lazy Loading. It was necessary to not download unnecessary data entities from the database when you need only a part of them. For example Album essence has a lot of photos. And we turn to the essence Album to add photos to the page (this page has a dropdownlist which contains the names of albums) when accessing Album does not need to load the associated photo, as this will affect the performance. Therefore, it uses Lazy Loading, which is implemented in the default EF (just needed to specify the virtual modifier for navigation properties).
+
+To prevent Session hijacking and other attacks, you can enable the global filter RequireHttps (I comment it out in the FilterConfig class, so as not to have to configure the server to work through SSL).
+
+On the main page SEARCH PHOTO button performs a search on the name of the photo. The entered name must exactly match (including case) with a record in the database. This also applies to the advanced search for photos of properties.
+
+To perform the job points "to use your custom helpers" I created a class HtmlHelpers ButtonVoteClasses method (located in the Helpers folder). It is used to indicate the relevant css classes to Like / Dislike buttons depending on transmitted on the View model.
+
+The restriction on the maximum number of albums and photos from a normal user can change to the Web.config in the appSettings section of the following keys:
